@@ -1,0 +1,66 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description,
+  canonical = Astro.url.href
+} = Astro.props;
+
+const nav = [
+  ["Home", "/"],
+  ["Troubleshooting", "/troubleshooting/"],
+  ["Updates", "/updates/"],
+  ["Guides", "/guides/"],
+  ["Maps", "/maps/"],
+  ["About", "/about/"]
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="MECCHA CHAMELEON Help RSS" href="/rss.xml" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell nav">
+        <a class="brand" href="/" aria-label="MECCHA CHAMELEON Help home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Chameleon Help Desk</span>
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          {nav.map(([label, href]) => (
+            <a href={href} aria-current={Astro.url.pathname === href ? "page" : undefined}>{label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="shell">
+        <p>
+          This is an unofficial fan-made website and is not affiliated with or endorsed by the game developer or publisher.
+        </p>
+        <p>
+          MVP rule: information is organized from public reports unless an article clearly says it was personally tested.
+          <a href="/privacy/">Privacy</a> · <a href="/disclaimer/">Disclaimer</a> · <a href="/rss.xml">RSS</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

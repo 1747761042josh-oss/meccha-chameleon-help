@@ -1,0 +1,92 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import StatusStrip from "../components/StatusStrip.astro";
+import { articleUrl, sortByUpdated } from "../utils/articles";
+
+const allArticles = sortByUpdated(await getCollection("articles"));
+const popular = allArticles.filter((article) => article.data.featured).slice(0, 6);
+const latest = allArticles.slice(0, 3);
+const quickLinks = allArticles.slice(0, 5);
+---
+
+<BaseLayout
+  title="MECCHA CHAMELEON Help Center MVP"
+  description="Unofficial MECCHA CHAMELEON help site MVP for community-reported issues, update notes, and safe beginner guidance."
+>
+  <section class="shell hero">
+    <div>
+      <p class="eyebrow">Unofficial · Community-first · No fake testing claims</p>
+      <h1>MECCHA CHAMELEON help without pretending.</h1>
+      <p class="lead">
+        A lightweight help desk for common errors, update notes, and beginner questions. This MVP organizes public information and marks weak evidence clearly.
+      </p>
+      <div class="button-row">
+        <a class="button" href="/troubleshooting/">Open issue tracker</a>
+        <a class="button secondary" href="/guides/">Browse guides</a>
+      </div>
+    </div>
+    <aside class="search-panel">
+      <header>
+        <span>Find a known issue</span>
+        <span>⌕</span>
+      </header>
+      <input id="issue-search" type="search" placeholder="Try: token, friends, signing in" aria-label="Search known issues" />
+      <div class="quick-list" id="quick-list">
+        {quickLinks.map((article) => (
+          <a href={articleUrl(article)} data-title={`${article.data.title} ${article.data.description} ${article.data.tags.join(" ")}`.toLowerCase()}>
+            <span>{article.data.title}</span>
+            <span class="tag">{article.data.verificationStatus}</span>
+          </a>
+        ))}
+      </div>
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Popular fixes</p>
+          <h2>Start with problems players actually report.</h2>
+        </div>
+        <a class="button secondary" href="/troubleshooting/">All fixes</a>
+      </div>
+      <div class="grid">
+        {popular.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Latest</p>
+          <h2>Fresh notes for the MVP.</h2>
+        </div>
+      </div>
+      <div class="grid">
+        {latest.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  </section>
+
+  <StatusStrip />
+
+  <script>
+    const input = document.querySelector("#issue-search");
+    const items = Array.from(document.querySelectorAll("#quick-list a"));
+    input?.addEventListener("input", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement)) return;
+      const query = target.value.toLowerCase().trim();
+      items.forEach((item) => {
+        if (!(item instanceof HTMLElement)) return;
+        const haystack = item.getAttribute("data-title") || "";
+        item.style.display = !query || haystack.includes(query) ? "grid" : "none";
+      });
+    });
+  </script>
+</BaseLayout>

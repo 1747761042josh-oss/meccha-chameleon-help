@@ -1,0 +1,20 @@
+---
+import type { Article } from "../utils/articles";
+import { articleUrl, statusClass } from "../utils/articles";
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+---
+
+<a class="card" href={articleUrl(article)}>
+  <div class="meta">
+    <span class={statusClass(article.data.verificationStatus)}>{article.data.verificationStatus}</span>
+    <span class="badge">{article.data.category}</span>
+  </div>
+  <h3>{article.data.title}</h3>
+  <p>{article.data.description}</p>
+  <p><strong>Updated:</strong> {article.data.lastUpdated.toISOString().slice(0, 10)}</p>
+</a>

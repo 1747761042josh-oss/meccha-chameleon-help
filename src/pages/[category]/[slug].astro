@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { articleUrl, statusClass } from "../../utils/articles";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+  return articles.map((article) => {
+    const slug = article.id.replace(/\.mdx?$/, "");
+    return {
+      params: {
+        category: article.data.category,
+        slug
+      },
+      props: { article }
+    };
+  });
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const pageUrl = new URL(articleUrl(article), Astro.site ?? Astro.url);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.data.title,
+  description: article.data.description,
+  dateModified: article.data.lastUpdated.toISOString(),
+  author: {
+    "@type": "Person",
+    name: article.data.author
+  },
+  mainEntityOfPage: pageUrl.href
+};
+---
+
+<BaseLayout title={`${article.data.title} | MECCHA CHAMELEON Help`} description={article.data.description} canonical={pageUrl.href}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <div class="shell article-shell">
+    <article class="article">
+      <p class="eyebrow">{article.data.category}</p>
+      <h1>{article.data.title}</h1>
+      <p class="lead">{article.data.description}</p>
+      <div class="meta">
+        <span class={statusClass(article.data.verificationStatus)}>{article.data.verificationStatus}</span>
+        <span class="badge">Version: {article.data.gameVersion}</span>
+        <span class="badge">Updated: {article.data.lastUpdated.toISOString().slice(0, 10)}</span>
+      </div>
+      <Content />
+    </article>
+    <aside class="sidebar">
+      <h3>Evidence boundary</h3>
+      <p>This MVP does not claim personal testing unless an article explicitly includes a test record.</p>
+      <h3>Sources</h3>
+      {article.data.sources.length ? (
+        <ul>
+          {article.data.sources.map((source) => (
+            <li><a href={source.url}>{source.label}</a></li>
+          ))}
+        </ul>
+      ) : (
+        <p>No external source attached yet.</p>
+      )}
+    </aside>
+  </div>
+</BaseLayout>

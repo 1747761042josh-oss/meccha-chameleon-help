@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Chameleon Help Desk">
+  <rect width="64" height="64" rx="10" fill="#f6f3ea"/>
+  <path d="M16 34c0-12 10-21 23-17 8 2 12 9 10 16-2 8-10 13-20 12l-8 7 2-10c-4-2-7-5-7-8Z" fill="#80a84f" stroke="#171a18" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="40" cy="27" r="4" fill="#fff"/>
+  <circle cx="41" cy="27" r="2" fill="#171a18"/>
+  <path d="M18 36c8-1 17-5 28 2" fill="none" stroke="#e85d3f" stroke-width="5" stroke-linecap="round"/>
+</svg>

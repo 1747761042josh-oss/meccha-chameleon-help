@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Logs
+*.log
+dev-server.log
+dev-server.err.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# System files
+Thumbs.db
+.DS_Store

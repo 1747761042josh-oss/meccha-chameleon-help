@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { sortByUpdated } from "../../utils/articles";
+
+const articles = sortByUpdated((await getCollection("articles")).filter((article) => article.data.category === "troubleshooting"));
+---
+
+<BaseLayout title="MECCHA CHAMELEON Troubleshooting" description="Community-reported MECCHA CHAMELEON errors and safe checks, clearly marked by verification status.">
+  <section class="shell section">
+    <p class="eyebrow">Troubleshooting</p>
+    <h1>Known issues tracker.</h1>
+    <p class="lead">Safe first checks, public reports, and clear labels for what still needs verification.</p>
+    <div class="grid">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </div>
+  </section>
+</BaseLayout>

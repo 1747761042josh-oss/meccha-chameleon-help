@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { sortByUpdated } from "../../utils/articles";
+
+const articles = sortByUpdated((await getCollection("articles")).filter((article) => article.data.category === "updates"));
+---
+
+<BaseLayout title="MECCHA CHAMELEON Updates" description="Unofficial update notes and issue-tracking pages for MECCHA CHAMELEON.">
+  <section class="shell section">
+    <p class="eyebrow">Updates</p>
+    <h1>Patch notes, translated into action.</h1>
+    <p class="lead">A place to explain what changed, what still breaks, and which older guides may need review.</p>
+    <div class="grid">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </div>
+  </section>
+</BaseLayout>

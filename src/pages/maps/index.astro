@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { sortByUpdated } from "../../utils/articles";
+
+const articles = sortByUpdated((await getCollection("articles")).filter((article) => article.data.category === "maps"));
+---
+
+<BaseLayout title="MECCHA CHAMELEON Maps" description="Map and hiding-spot article placeholders that require real screenshots before strong claims.">
+  <section class="shell section">
+    <p class="eyebrow">Maps</p>
+    <h1>Map notes need real screenshots.</h1>
+    <p class="lead">This section stays conservative until there are original images, replay notes, and version records.</p>
+    <div class="grid">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </div>
+  </section>
+</BaseLayout>

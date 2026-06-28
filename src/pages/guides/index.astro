@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { sortByUpdated } from "../../utils/articles";
+
+const articles = sortByUpdated((await getCollection("articles")).filter((article) => article.data.category === "guides"));
+---
+
+<BaseLayout title="MECCHA CHAMELEON Guides" description="Beginner-safe MECCHA CHAMELEON guide topics for the MVP, without invented testing claims.">
+  <section class="shell section">
+    <p class="eyebrow">Guides</p>
+    <h1>Beginner questions first.</h1>
+    <p class="lead">Guides here explain common player questions and avoid claiming best strategies before testing exists.</p>
+    <div class="grid">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </div>
+  </section>
+</BaseLayout>
