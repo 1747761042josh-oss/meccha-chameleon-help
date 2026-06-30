@@ -6,15 +6,19 @@
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
     "build": "astro check && astro build",
-    "preview": "astro preview --host 127.0.0.1"
+    "preview": "npm run build && wrangler dev",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.0.1",
     "@astrojs/rss": "latest",
     "@astrojs/sitemap": "latest",
     "astro": "latest"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "typescript": "latest"
+    "typescript": "latest",
+    "wrangler": "^4.105.0"
   }
 }
