@@ -30,7 +30,7 @@ The static site is generated in `dist/`.
 Set the public site URL before deployment:
 
 ```bash
-SITE_URL=https://your-domain.example
+SITE_URL=https://www.yxdnr.xyz
 ```
 
 This controls canonical URLs and sitemap generation.
@@ -63,5 +63,5 @@ Recommended settings:
 ```text
 Build command: npm run build
 Build output directory: dist
-Environment variable: SITE_URL=https://your-domain.example
+Environment variable: SITE_URL=https://www.yxdnr.xyz
 ```

@@ -33,7 +33,7 @@ Do not run `git push` until you are ready to publish the repository.
 7. Add environment variable:
 
 ```text
-SITE_URL=https://your-domain.example
+SITE_URL=https://www.yxdnr.xyz
 ```
 
 8. Deploy.
@@ -52,11 +52,11 @@ SITE_URL=https://your-domain.example
 Submit:
 
 ```text
-https://your-domain.example/sitemap-index.xml
+https://www.yxdnr.xyz/sitemap-index.xml
 ```
 
 Optional:
 
 ```text
-https://your-domain.example/rss.xml
+https://www.yxdnr.xyz/rss.xml
 ```
